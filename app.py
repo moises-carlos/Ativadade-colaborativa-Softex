@@ -79,6 +79,7 @@ class Carro(VeiculoMotorizado):
         self.modelo = modelo
         # Composição: O objeto Motor é criado dentro do Carro
         self.motor = Motor("V8")
+        self.cinto_de_seguranca = False
     
     def ligar_motor(self):
         # Encapsulamento: Acessando o método do objeto Motor
@@ -106,6 +107,19 @@ class Carro(VeiculoMotorizado):
             print(self.motor.desligar())
         except Exception as e:
             print(f"Erro: {e}")
+
+    def colocar_cinto(self):
+        self.cinto_de_seguranca = True
+        print("Cinto de segurança afivelado.")
+
+    def tirar_cinto(self):
+        self.cinto_de_seguranca = False
+        print("Cinto de segurança desafivelado.")
+
+    def verificar_cinto(self):
+        if self.velocidade >= 30 and not self.cinto_de_seguranca:
+            print("ALERTA: Velocidade igual ou superior a 30 km/h. Por favor, afivele o cinto de segurança.")
+
             
     def __str__(self):
         return f"Marca do carro: {self.marca} \nModelo do Carro: {self.modelo}"
