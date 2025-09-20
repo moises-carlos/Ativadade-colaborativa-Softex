@@ -16,9 +16,9 @@ O propósito principal deste projeto é servir como um campo de aprendizado prá
 
 * **Linguagem:** Python
 
-## 🤝 Contribuições
+## 🤝 Contribuição
 
-Este é um projeto de estudo, mas sugestões e melhorias são sempre bem-vindas! Se você tiver alguma ideia, sinta-se à vontade para:
+Se você tiver alguma ideia, sinta-se à vontade para:
 
 1.  Fazer um "Fork" do projeto.
 2.  Criar uma nova "Branch" (`git checkout -b feature/sua-melhoria`).
