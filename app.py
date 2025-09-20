@@ -1,7 +1,21 @@
+
+# Modificar código abaixo para:
+
+# Obrigar um motor no veículo
+# Obrigar uma placa no veículo
+# Obrigar uma velocidade no veículo
+# Obrigar funções frear e desligar(só desliga com carro parado)
+# Implementar uma função de STR no veículo que fornece detalhes do veículo por texto
+# Ter uma potência no motor
+# Ter uma taxa de aceleração no motor (é o incremento de velocidade por aceleração)
+# Ter uma solicitação de cinto de segurança havendo velocidade igual ou superior a 30 km/h
+
+
 from abc import ABC, abstractmethod
 
 # Interface: Define um contrato de comportamento
 class VeiculoMotorizado(ABC):
+
     @abstractmethod
     def ligar_motor(self):
         pass
