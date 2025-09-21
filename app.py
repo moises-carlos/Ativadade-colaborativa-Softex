@@ -15,10 +15,11 @@ from abc import ABC, abstractmethod
 
 # Interface: Define um contrato de comportamento
 class VeiculoMotorizado(ABC):
-    def __init__(self, motor):
+    def __init__(self, motor, velocidade_inicial=0):
         if not isinstance(motor, Motor):
             raise TypeError("Um veículo deve ter um objeto do tipo Motor.")
         self.motor = motor
+        self.velocidade = velocidade_inicial
 
     @abstractmethod
     def ligar_motor(self):
@@ -47,17 +48,24 @@ class Carro(VeiculoMotorizado):
         super().__init__(motor)
         self.marca = marca
         self.modelo = modelo
+        self.cinto = False
+
         # Composição: O objeto Motor é criado dentro do Carro
 
     def ligar_motor(self):
         # Encapsulamento: Acessando o método do objeto Motor
         print(self.motor.ligar())
     
-    def acelerar(self):
+    def acelerar(self, valor):
         if self.motor.get_status() == "ligado":
-            print(f"O {self.modelo} está acelerando!")
+            self.velocidade += valor
+            print(f"O {self.modelo} acelerando... a {self.velocidade} km/h")
         else:
             raise Exception("Erro: O motor precisa estar ligado para acelerar.")
+
+    def fixar_cinto(self):
+        self.cinto = True
+        return "Cinto de segurança fixado."
 
 # Herança e Polimorfismo: Moto implementa a interface VeiculoMotorizado
 class Moto(VeiculoMotorizado):
@@ -69,8 +77,9 @@ class Moto(VeiculoMotorizado):
     def ligar_motor(self):
         print(self.motor.ligar())
 
-    def acelerar(self):
+    def acelerar(self, valor):
         if self.motor.get_status() == "ligado":
+            self.velocidade += valor
             print(f"A {self.modelo} está acelerando na pista!")
         else:
             raise Exception("Erro: A moto precisa estar ligada para acelerar.")
@@ -98,6 +107,11 @@ meu_carro_eletrico = Carro(motor=motor_eletrico, marca="Volvo", modelo="EX30")
 meu_carro_hibrido = Carro(motor=motor_hibrido, marca="Haval", modelo="GWM")
 meu_carro_gasolina = Carro(motor=motor_gasolina, marca="Renault", modelo="Duster")
 meu_carro_flex = Carro(motor=motor_flex, marca="Toyota", modelo="Corola")
+
+meu_carro_flex.ligar_motor()
+meu_carro_flex.acelerar(10)
+meu_carro_flex.acelerar(20)
+
 
 # se não instanciar Motor haverá erro
 # meu_carro_flex2 = Carro(marca="Toyota", modelo="Corola")
