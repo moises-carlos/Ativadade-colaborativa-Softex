@@ -1,7 +1,7 @@
 
 # Modificar código abaixo para:
 
-# Obrigar um motor no veículo
+# Obrigar um motor no veículo  
 # Obrigar uma placa no veículo
 # Obrigar uma velocidade no veículo
 # Obrigar funções frear e desligar(só desliga com carro parado)
@@ -15,6 +15,10 @@ from abc import ABC, abstractmethod
 
 # Interface: Define um contrato de comportamento
 class VeiculoMotorizado(ABC):
+    def __init__(self, motor):
+        if not isinstance(motor, Motor):
+            raise TypeError("Um veículo deve ter um objeto do tipo Motor.")
+        self.motor = motor
 
     @abstractmethod
     def ligar_motor(self):
@@ -39,12 +43,12 @@ class Motor:
 
 # Herança e Polimorfismo: Carro implementa a interface VeiculoMotorizado
 class Carro(VeiculoMotorizado):
-    def __init__(self, marca, modelo):
+    def __init__(self, marca, modelo, motor):
+        super().__init__(motor)
         self.marca = marca
         self.modelo = modelo
         # Composição: O objeto Motor é criado dentro do Carro
-        self.motor = Motor("V8")
-    
+
     def ligar_motor(self):
         # Encapsulamento: Acessando o método do objeto Motor
         print(self.motor.ligar())
@@ -57,10 +61,10 @@ class Carro(VeiculoMotorizado):
 
 # Herança e Polimorfismo: Moto implementa a interface VeiculoMotorizado
 class Moto(VeiculoMotorizado):
-    def __init__(self, marca, modelo):
+    def __init__(self, marca, modelo, motor):
+        super().__init__(motor)
         self.marca = marca
         self.modelo = modelo
-        self.motor = Motor("250cc")
         
     def ligar_motor(self):
         print(self.motor.ligar())
@@ -79,6 +83,32 @@ def testar_veiculo(veiculo):
     except Exception as e:
         print(f"Houve um problema: {e}")
 
+# exemplo de uso
+
+# criando motores
+
+motor_gasolina = Motor(tipo="Gasolina")
+motor_flex = Motor(tipo="Flex")
+motor_eletrico = Motor(tipo="Elétrico")
+motor_hibrido = Motor(tipo="Híbrido")
+
+# criando veículos
+minha_moto_eletrica = Moto(motor=motor_eletrico, marca="Yamaha", modelo="Neos")
+meu_carro_eletrico = Carro(motor=motor_eletrico, marca="Volvo", modelo="EX30")
+meu_carro_hibrido = Carro(motor=motor_hibrido, marca="Haval", modelo="GWM")
+meu_carro_gasolina = Carro(motor=motor_gasolina, marca="Renault", modelo="Duster")
+meu_carro_flex = Carro(motor=motor_flex, marca="Toyota", modelo="Corola")
+
+# se não instanciar Motor haverá erro
+# meu_carro_flex2 = Carro(marca="Toyota", modelo="Corola")
+
+print(minha_moto_eletrica.ligar_motor())
+print(meu_carro_eletrico.ligar_motor())
+print(meu_carro_hibrido.ligar_motor())
+print(meu_carro_gasolina.ligar_motor())
+print(meu_carro_flex.ligar_motor())
+
+"""
 # Exemplo de uso
 meu_carro = Carro("Ford", "Mustang")
 minha_moto = Moto("Honda", "CBR")
@@ -94,3 +124,4 @@ try:
     carro_quebrado.acelerar()
 except Exception as e:
     print(e)
+"""
