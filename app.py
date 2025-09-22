@@ -60,6 +60,8 @@ class Carro(VeiculoMotorizado):
         if self.motor.get_status() == "ligado":
             self.velocidade += valor
             print(f"O {self.modelo} acelerando... a {self.velocidade} km/h")
+            if not self.cinto and self.velocidade >= 30:
+                print("Fixe o cinto de segurança!")
         else:
             raise Exception("Erro: O motor precisa estar ligado para acelerar.")
 
@@ -110,17 +112,18 @@ meu_carro_flex = Carro(motor=motor_flex, marca="Toyota", modelo="Corola")
 
 meu_carro_flex.ligar_motor()
 meu_carro_flex.acelerar(10)
-meu_carro_flex.acelerar(20)
+meu_carro_flex.acelerar(60)
+
 
 
 # se não instanciar Motor haverá erro
 # meu_carro_flex2 = Carro(marca="Toyota", modelo="Corola")
 
-print(minha_moto_eletrica.ligar_motor())
-print(meu_carro_eletrico.ligar_motor())
-print(meu_carro_hibrido.ligar_motor())
-print(meu_carro_gasolina.ligar_motor())
-print(meu_carro_flex.ligar_motor())
+#print(minha_moto_eletrica.ligar_motor())
+#print(meu_carro_eletrico.ligar_motor())
+#print(meu_carro_hibrido.ligar_motor())
+#print(meu_carro_gasolina.ligar_motor())
+#print(meu_carro_flex.ligar_motor())
 
 """
 # Exemplo de uso
