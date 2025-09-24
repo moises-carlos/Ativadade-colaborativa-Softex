@@ -24,21 +24,56 @@ class VeiculoMotorizado(ABC):
     def acelerar(self):
         pass
 
+    @abstractmethod
+    def frear(self):
+        pass
+
+    @abstractmethod
+    def desligar(self):
+        pass
+
+    
+
 # Composição: A classe Motor é parte da classe Veiculo
 class Motor:
     def __init__(self, tipo):
         self.tipo = tipo
         self.__ligado = False # Atributo privado
+        self.__movendo = False # Indica se o veiculo está em movimento
 
     def ligar(self):
         self.__ligado = True
         return f"Motor {self.tipo} ligado."
+    
+    def desligar(self):
+        if not self.__movendo:
+            self.__ligado = False
+            return f"Motor {self.tipo} ligado."
+        else: 
+            raise Exception("Não é possível desligar o carro em movemnto.")
+            
 
     def get_status(self):
         return "ligado" if self.__ligado else "desligado"
+    
+    def get_status_completo(self):
+        return {"ligado": self.__ligado, "movendo": self.__movendo }
+    
+    def mover(self):
+        if self.__ligado:
+            self.__movendo = True
+            return True
+        return False
 
+    def parar(self):
+        self.__movendo = True
+
+    
+    
+        
 # Herança e Polimorfismo: Carro implementa a interface VeiculoMotorizado
 class Carro(VeiculoMotorizado):
+
     def __init__(self, marca, modelo):
         self.marca = marca
         self.modelo = modelo
@@ -50,10 +85,27 @@ class Carro(VeiculoMotorizado):
         print(self.motor.ligar())
     
     def acelerar(self):
-        if self.motor.get_status() == "ligado":
-            print(f"O {self.modelo} está acelerando!")
+        status = self.motor.get_status_completo()
+        if status["ligado"]:
+            if self.motor.mover():
+                print(f"O {self.modelo} começou a se mover!")
+            else:
+                raise Exception("Erro: O motor precisa estar ligado para acelerar.")
+
+
+    def frear(self):
+        status = self.motor.get_status_completo()
+        if status["movendo"]:
+            self.motor.parar()
+            print(f"O {self.modelo} Parou de se mover.")
         else:
-            raise Exception("Erro: O motor precisa estar ligado para acelerar.")
+            print(f"O {self.modelo} já está parado.")
+
+    def desligar(self):
+        try:
+            print(self.motor.desligar())
+        except Exception as e:
+            print(f"Erro: {e}")
 
 # Herança e Polimorfismo: Moto implementa a interface VeiculoMotorizado
 class Moto(VeiculoMotorizado):
@@ -71,11 +123,26 @@ class Moto(VeiculoMotorizado):
         else:
             raise Exception("Erro: A moto precisa estar ligada para acelerar.")
 
+    def frear(self):
+        status = self.motor.get_status_completo()
+        if status["movendo"]:
+            self.motor.parar()
+            print(f"O {self.modelo} está parando.")
+        else:
+            print(f"O {self.modelo} já está parado.")
+        
+    def desligar(self):
+        try: 
+            print(self.motor.desligar())
+        except Exception as e:
+            print(f"Error: {e}")
 # Função que usa polimorfismo
 def testar_veiculo(veiculo):
     try:
         veiculo.ligar_motor()
         veiculo.acelerar()
+        veiculo.frear()
+        veiculo.desligar()
     except Exception as e:
         print(f"Houve um problema: {e}")
 
