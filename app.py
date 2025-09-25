@@ -5,7 +5,6 @@
 # Obrigar uma placa no veículo
 # Obrigar uma velocidade no veículo
 # Obrigar funções frear e desligar(só desliga com carro parado)
-# Implementar uma função de STR no veículo que fornece detalhes do veículo por texto
 # Ter uma potência no motor
 # Ter uma taxa de aceleração no motor (é o incremento de velocidade por aceleração)
 # Ter uma solicitação de cinto de segurança havendo velocidade igual ou superior a 30 km/h
@@ -15,7 +14,7 @@ from abc import ABC, abstractmethod
 
 # Interface: Define um contrato de comportamento
 class VeiculoMotorizado(ABC):
-
+    
     @abstractmethod
     def ligar_motor(self):
         pass
@@ -67,6 +66,7 @@ class Motor:
 
     def parar(self):
         self.__movendo = True
+        
 
     
     
@@ -106,6 +106,9 @@ class Carro(VeiculoMotorizado):
             print(self.motor.desligar())
         except Exception as e:
             print(f"Erro: {e}")
+            
+    def __str__(self):
+        return f"Marca do carro: {self.marca} \nModelo do Carro: {self.modelo}"
 
 # Herança e Polimorfismo: Moto implementa a interface VeiculoMotorizado
 class Moto(VeiculoMotorizado):
@@ -136,6 +139,11 @@ class Moto(VeiculoMotorizado):
             print(self.motor.desligar())
         except Exception as e:
             print(f"Error: {e}")
+            
+    def __str__(self):
+        return f"Marca da moto: {self.marca} \nModelo da moto: {self.modelo}"
+    
+    
 # Função que usa polimorfismo
 def testar_veiculo(veiculo):
     try:
@@ -145,6 +153,8 @@ def testar_veiculo(veiculo):
         veiculo.desligar()
     except Exception as e:
         print(f"Houve um problema: {e}")
+        
+
 
 # Exemplo de uso
 meu_carro = Carro("Ford", "Mustang")
@@ -161,3 +171,9 @@ try:
     carro_quebrado.acelerar()
 except Exception as e:
     print(e)
+
+
+
+print(str(meu_carro))
+print("-" * 20)
+print(str(minha_moto))
