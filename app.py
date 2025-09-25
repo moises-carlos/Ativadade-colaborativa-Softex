@@ -38,21 +38,20 @@ class VeiculoMotorizado(ABC):
 class Motor:
     def __init__(self, tipo):
         self.tipo = tipo
-        self.__ligado = False # Atributo privado
-        self.__movendo = False # Indica se o veiculo está em movimento
+        self.__ligado = False
+        self.__movendo = False
 
     def ligar(self):
         self.__ligado = True
         return f"Motor {self.tipo} ligado."
     
     def desligar(self):
-        if not self.__movendo:
+        if not self.__movendo:  # só desliga se não estiver se movendo
             self.__ligado = False
-            return f"Motor {self.tipo} ligado."
-        else: 
-            raise Exception("Não é possível desligar o carro em movemnto.")
+            return f"Motor {self.tipo} desligado."
+        else:
+            raise Exception("Não é possível desligar o carro em movimento.")
             
-
     def get_status(self):
         return "ligado" if self.__ligado else "desligado"
     
@@ -66,9 +65,7 @@ class Motor:
         return False
 
     def parar(self):
-        self.__movendo = True
-
-    
+        self.__movendo = False # Antes estava True
     
         
 # Herança e Polimorfismo: Carro implementa a interface VeiculoMotorizado
