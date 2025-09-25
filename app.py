@@ -1,7 +1,7 @@
 
 # Modificar código abaixo para:
 
-# # Obrigar um motor no veículo
+# Obrigar um motor no veículo
 # Obrigar uma placa no veículo
 # Obrigar uma velocidade no veículo
 # Obrigar funções frear e desligar(só desliga com carro parado)
