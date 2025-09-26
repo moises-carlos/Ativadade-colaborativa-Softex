@@ -97,7 +97,7 @@ class Moto(VeiculMotorizado):
 
     def acelerar(self):
         if self.motor.get_status() == 'ligado':
-            self.velocidade += self.motor.taxa_aceleracao
+            self.velocidade += self.motor.taxa_aceleração
             print(f'A {self.modelo} está acelerando na pista')
             print(f'Velocidade atual: {self.velocidade} km/h')
         else:
